@@ -39,3 +39,4 @@ test.describe("Product Page Validation", () => {
     await productPage.addAllProductsToCart();
   });
 });
+// fresh CI trigger
