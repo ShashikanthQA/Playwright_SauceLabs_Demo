@@ -44,8 +44,31 @@ test.describe("Product Page Validation @regression", () => {
     await productPage.addAllProductsToCart();
   });
 
-  test("Validate add specific products to cart", async ({ page })=> {
+  test("Validate add specific products to cart", async ({ page }) => {
     await productPage.addSpecificProductToCart(productsToCart);
-  })
+  });
+  test("Filter by Name A to Z", async () => {
+    await productPage.filterByNameAtoZ();
+    const names = await productPage.getProductNames();
+    const sorted = [...names].sort();
+    expect(names).toEqual(sorted);
+  });
+  test("Filter by Name Z to A", async () => {
+    await productPage.filterByNameZtoA();
+    const names = await productPage.getProductNames();
+    const sorted = [...names].sort().reverse();
+    expect(names).toEqual(sorted);
+  });
+  test("Filter by Price Low to High", async () => {
+    await productPage.filterByPriceLowToHigh();
+    const prices = await productPage.getProductPrices();
+    const sorted = [...prices].sort((a, b) => a - b);
+    expect(prices).toEqual(sorted);
+  });
+  test("Filter by Price High to Low", async () => {
+    await productPage.filterByPriceHighToLow();
+    const prices = await productPage.getProductPrices();
+    const sorted = [...prices].sort((a, b) => b - a);
+    expect(prices).toEqual(sorted);
+  });
 });
-

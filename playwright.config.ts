@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import process from "process";
 
 /**
  * Read environment variables from file.
@@ -37,9 +38,8 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Chrome"], launchOptions: { slowMo: 1000 } },
     },
-
     {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
