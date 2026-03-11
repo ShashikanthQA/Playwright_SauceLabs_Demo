@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test";
 import { ProductPageLocators } from "../locators/ProductPageLocators";
 
+
 export class ProductPage {
   constructor(private page: Page) {}
   async logoutPage() {
@@ -88,5 +89,50 @@ export class ProductPage {
    {
     const prices = await this.page.locator(ProductPageLocators.productPrice).allTextContents()
     return prices.map(price => parseFloat(price.replace('$', '')))
+   }
+   async clickOnCartLink()
+   {
+    await this.page.click(ProductPageLocators.cartlink)
+  }
+   async getFirstProductDetails()
+   {
+    const name = await this.page.locator(ProductPageLocators.productName).first().textContent();
+    const description = await this.page.locator(ProductPageLocators.productDesxription).first().textContent();
+    const price = await this.page.locator(ProductPageLocators.productPrice).first().textContent()
+
+    return {
+      name: name?.trim(),
+      description: description?.trim(),
+      price: price?.trim()
+    }
+   }
+   async getAllProductDetails()
+   {
+    const allNames = await this.page.locator(ProductPageLocators.productName).allTextContents();
+    const allDescriptions = await this.page.locator(ProductPageLocators.productDesxription).allTextContents();
+    const allPrices = await this.page.locator(ProductPageLocators.productPrice).allTextContents();
+
+    const allProducts = allNames.map((_,i)=>
+    ({
+      name: allNames[i].trim(),
+      description : allDescriptions[i].trim(),
+      price : allPrices[i].trim()
+    }))
+    return allProducts;
+
+   }  
+   async getSpecificProductDetails(prouctName : string[])
+   {
+ const allNames = await this.page.locator(ProductPageLocators.productName).allTextContents();
+    const allDescriptions = await this.page.locator(ProductPageLocators.productDesxription).allTextContents();
+    const allPrices = await this.page.locator(ProductPageLocators.productPrice).allTextContents();
+
+    const allProducts = allNames.map((_,i)=>
+    ({
+      name: allNames[i].trim(),
+      description : allDescriptions[i].trim(),
+      price : allPrices[i].trim()
+    }))
+    return allProducts.filter(p => prouctName.includes(p.name))
    }
 }
