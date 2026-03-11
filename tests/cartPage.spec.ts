@@ -37,12 +37,12 @@ test.describe("Cart Page Validation", () => {
     await expect(page).toHaveURL("https://www.saucedemo.com/inventory.html");
   });
 
-  test.only("Validate First Product in the CartPage", async ({ page }) => {
+  test("Validate First Product in the CartPage", async ({ page }) => {
     const firstProduct = await productPage.getFirstProductDetails();
     await productPage.addFirstProductToCart();
     await productPage.clickOnCartLink();
-    const cartProducts = await cartPage.getCartProducts()
-      expect(cartProducts[0]).toEqual(firstProduct)
+    const cartProducts = await cartPage.getCartProducts();
+    expect(cartProducts[0]).toEqual(firstProduct);
   });
   test("Validate All Product added to Cart Page", async ({ page }) => {});
   test("Validate Specific Product added to Cart Page", async ({ page }) => {});
